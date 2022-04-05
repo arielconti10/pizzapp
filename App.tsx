@@ -7,6 +7,7 @@ import { DMSerifDisplay_400Regular } from '@expo-google-fonts/dm-serif-display';
 import { ThemeProvider } from 'styled-components/native'
 
 import theme from './src/theme';
+import { SignIn } from '@src/screens/SignIn';
 
 export default function App() {
   
@@ -21,7 +22,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Text>Hello World!</Text>
+      <SignIn />
     </ThemeProvider>
   );
 }
