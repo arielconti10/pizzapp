@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Platform, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 import { Button } from '@components/Button';
 import { ButtonBack } from '@components/ButtonBack';
@@ -63,6 +65,34 @@ export function Product() {
     if(!priceSizeP || !priceSizeM || !priceSizeG){
       return Alert.alert("Cadastro", "Preencha todos os preços");
     }
+
+    setIsLoading(true);
+
+    const fileName = new Date().getTime();
+    const reference = storage().ref(`/pizzas/${fileName}.png`);
+
+    await reference.putFile(image);
+    const photo_url = await reference.getDownloadURL();
+
+    firestore()
+    .collection('pizzas')
+    .add({
+      name,
+      name_insensitive: name.toLowerCase().trim(),
+      description,
+      photo_url,
+      price_sizes: {
+        p: priceSizeP,
+        m: priceSizeM,
+        g: priceSizeG,
+      },
+      photo_path: reference.fullPath
+    })
+    .then(() => Alert.alert('Cadastro', 'Produto cadastrado com sucesso'))
+    .catch(() => Alert.alert('Cadastro', 'Erro ao cadastrar produto'))
+
+    setIsLoading(false);
+    
   }
 
   return (
