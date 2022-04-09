@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Platform, TouchableOpacity, ScrollView } from 'react-native';
+import { Platform, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 import { Button } from '@components/Button';
@@ -47,6 +47,24 @@ export function Product() {
 
   }
 
+  async function handleAdd() {
+    if(!name.trim()){
+      return Alert.alert("Cadastro", "Preencha o nome do produto");
+    }
+
+    if(!description.trim()){
+      return Alert.alert("Cadastro", "Preencha a descrição do produto");
+    }
+
+    if(!image){
+      return Alert.alert("Cadastro", "Selecione uma imagem");
+    }
+
+    if(!priceSizeP || !priceSizeM || !priceSizeG){
+      return Alert.alert("Cadastro", "Preencha todos os preços");
+    }
+  }
+
   return (
     <Container behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -90,16 +108,19 @@ export function Product() {
 
           <InputGroup>
             <Label>Tamanhos e preços</Label>
+            
             <InputPrice 
               size="P"
               onChangeText={setPriceSizeP} 
               value={priceSizeP}
             />
+            
             <InputPrice 
               size="M"
               onChangeText={setPriceSizeM} 
               value={priceSizeM}
             />
+
             <InputPrice 
               size="G"
               onChangeText={setPriceSizeG} 
@@ -110,6 +131,7 @@ export function Product() {
           <Button 
             title="Cadastrar pizza"
             isLoading={isLoading}
+            onPress={handleAdd}
           />
         </Form>
       </ScrollView>
