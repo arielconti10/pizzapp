@@ -105,11 +105,11 @@ export function Product() {
       },
       photo_path: reference.fullPath
     })
-    .then(() => Alert.alert('Cadastro', 'Produto cadastrado com sucesso'))
-    .catch(() => Alert.alert('Cadastro', 'Erro ao cadastrar produto'))
-
-    setIsLoading(false);
-    
+    .then(() => navigation.navigate('home'))
+    .catch(() => {
+      Alert.alert('Cadastro', 'Erro ao cadastrar produto')
+      setIsLoading(false);
+    })
   }
 
   async function handleDelete() {

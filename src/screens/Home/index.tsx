@@ -116,7 +116,7 @@ export function Home() {
 
       <NewProductButton 
         title="Cadastrar Pizza" 
-        type="secondary"
+        type="primary"
         onPress={handleAdd}
       />
 
