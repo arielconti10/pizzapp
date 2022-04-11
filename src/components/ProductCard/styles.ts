@@ -11,7 +11,7 @@ export const Content = styled(RectButton)`
 `
 
 export const Image = styled.Image`
-  width: 104;
+  width: 104px;
   height: 104px;
   border-radius: 52px;
   margin-right: 20px;

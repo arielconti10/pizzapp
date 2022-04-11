@@ -19,12 +19,13 @@ import {
 import { Search } from '@components/Search';
 import { ProductCard, ProductProps } from '@components/ProductCard';
 import { FlatList } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 export function Home() {
   const { COLORS } = useTheme()
   const [search, setSearch] = useState<string>('');
   const [pizzas, setPizzas] = useState<ProductProps[]>([]);
-
+  const navigation = useNavigation();
 
   function fetchPizzas(value: string) {
     const formattedValue = value.toLocaleLowerCase().trim();
@@ -46,6 +47,10 @@ export function Home() {
         setPizzas(data);
       })
       .catch(() => Alert.alert('Consulta', 'Não foi possível realizar a consulta'));
+  }
+
+  function handleOpen(id: string) {
+    navigation.navigate('product', { id });
   }
 
   function handleSearch() {
@@ -89,7 +94,12 @@ export function Home() {
       <FlatList 
         data={pizzas} 
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <ProductCard data={item} />}
+        renderItem={({ item }) => (
+          <ProductCard 
+            data={item} 
+            onPress={() => handleOpen(item.id)}
+          />
+        )}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingTop: 20,
