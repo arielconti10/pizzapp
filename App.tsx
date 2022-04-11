@@ -8,7 +8,7 @@ import { AuthProvider } from '@hooks/auth';
 
 import theme from './src/theme';
 
-import { Home } from '@screens/Home';
+import { Routes } from './src/routes';
 
 export default function App() {
   
@@ -23,10 +23,10 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-        <StatusBar style="light" translucent backgroundColor='transparent'/>
-        <AuthProvider>
-          <Home />
-        </AuthProvider>
-      </ThemeProvider>
+      <StatusBar style="light" translucent backgroundColor='transparent'/>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
