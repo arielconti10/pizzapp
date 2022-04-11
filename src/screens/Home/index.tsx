@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useTheme } from 'styled-components/native';
@@ -17,11 +17,13 @@ import {
 } from './styles';
 
 import { Search } from '@components/Search';
+import { ProductCard, ProductProps } from '@components/ProductCard';
+import { FlatList } from 'react-native-gesture-handler';
 
 export function Home() {
   const { COLORS } = useTheme()
   const [search, setSearch] = useState<string>('');
-  const [pizzas, setPizzas] = useState<{id: string;}[]>([]);
+  const [pizzas, setPizzas] = useState<ProductProps[]>([]);
 
 
   function fetchPizzas(value: string) {
@@ -39,7 +41,7 @@ export function Home() {
             id: doc.id,
             ...doc.data(),
           }
-        });
+        }) as ProductProps[];
 
         setPizzas(data);
       })
@@ -54,6 +56,10 @@ export function Home() {
     setSearch('');
     fetchPizzas('');
   }
+
+  useEffect(() => {
+    fetchPizzas('');
+  }, [])
 
   return (
     <Container>
@@ -77,8 +83,20 @@ export function Home() {
 
       <MenuHeader>
         <Title>Cardápio</Title>
-        <MenuItemsNumber>10 pizzas</MenuItemsNumber>
+        <MenuItemsNumber>{pizzas.length} pizzas</MenuItemsNumber>
       </MenuHeader>
+    
+      <FlatList 
+        data={pizzas} 
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => <ProductCard data={item} />}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingTop: 20,
+          paddingBottom: 125,
+          marginHorizontal: 24,
+        }}
+      /> 
 
     </Container>
   )
