@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Alert, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useTheme } from 'styled-components/native';
@@ -19,7 +19,7 @@ import {
 import { Search } from '@components/Search';
 import { ProductCard, ProductProps } from '@components/ProductCard';
 import { FlatList } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 export function Home() {
   const { COLORS } = useTheme()
@@ -66,9 +66,11 @@ export function Home() {
     navigation.navigate('product', {});
   }
 
-  useEffect(() => {
-    fetchPizzas('');
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      fetchPizzas('');
+    }, [])
+  )
 
   return (
     <Container>
