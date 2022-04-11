@@ -75,6 +75,11 @@ export function Home() {
         onClear={handleSearchClear}
       />
 
+      <MenuHeader>
+        <Title>Cardápio</Title>
+        <MenuItemsNumber>10 pizzas</MenuItemsNumber>
+      </MenuHeader>
+
     </Container>
   )
 }
