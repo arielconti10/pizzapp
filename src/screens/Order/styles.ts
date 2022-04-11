@@ -15,8 +15,22 @@ export const Photo = styled.Image`
   top: -120px;
 `
 
+export const Form = styled.View`
+  width: 100%;
+  margin-top: -120px;
+  padding: 24px;
+`;
+
+export const Sizes = styled.View`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 40px;  
+`;
+
 export const Header = styled(LinearGradient).attrs(({ theme }) => ({
   colors: theme.COLORS.GRADIENT
 }))`
   padding: ${getStatusBarHeight() + 34}px 24px 0px;
 `;
+
