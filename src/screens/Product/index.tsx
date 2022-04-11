@@ -47,6 +47,7 @@ export function Product() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   
   const route = useRoute();
+  const navigation = useNavigation();
   const { id } = route.params as ProductNavigationProps;
 
   async function handlePickerImage() {  
@@ -136,7 +137,7 @@ export function Product() {
     <Container behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header>
-          <ButtonBack />
+          <ButtonBack onPress={() => navigation.goBack()}/>
 
           <Title>Cadastrar</Title>
           
