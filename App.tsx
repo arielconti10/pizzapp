@@ -9,7 +9,6 @@ import { AuthProvider } from '@hooks/auth';
 import theme from './src/theme';
 
 import { Routes } from './src/routes';
-import { Order } from '@screens/Order';
 
 export default function App() {
   
@@ -26,7 +25,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <StatusBar style="light" translucent backgroundColor='transparent'/>
       <AuthProvider>
-        <Order />
+        <Routes />
       </AuthProvider>
     </ThemeProvider>
   );
