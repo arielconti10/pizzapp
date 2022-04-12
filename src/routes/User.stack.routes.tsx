@@ -8,7 +8,7 @@ import { Home } from '@screens/Home';
 import { Product } from '@screens/Product';
 import { Order } from '@screens/Order';
 
-import { UserTabRoutes } from './user.tab.routes';
+import { UserTabRoutes } from './User.tab.routes';
 
 const { Navigator, Screen, Group } = createNativeStackNavigator();
 
