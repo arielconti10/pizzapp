@@ -27,7 +27,7 @@ export function Home() {
   const { COLORS } = useTheme()
   const [search, setSearch] = useState<string>('');
   const [pizzas, setPizzas] = useState<ProductProps[]>([]);
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const navigation = useNavigation();
 
   function fetchPizzas(value: string) {
@@ -53,7 +53,8 @@ export function Home() {
   }
 
   function handleOpen(id: string) {
-    navigation.navigate('product', { id });
+    const route = user?.isAdmin ? 'product' : 'order';
+    navigation.navigate(route, { id });
   }
 
   function handleSearch() {
@@ -121,11 +122,14 @@ export function Home() {
         }}
       /> 
 
-      <NewProductButton 
-        title="Cadastrar Pizza" 
-        type="primary"
-        onPress={handleAdd}
-      />
+      {
+        user?.isAdmin &&
+        <NewProductButton
+          title="Cadastrar Pizza"
+          type="secondary"
+          onPress={handleAdd}
+        />
+      }
 
     </Container>
   )
