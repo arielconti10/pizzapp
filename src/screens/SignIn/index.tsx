@@ -61,7 +61,7 @@ export function SignIn(){
 
           <Button 
             title="Entrar" 
-            type="secondary" 
+            type="primary" 
             onPress={handleSignIn} 
             isLoading={isLogging} 
           />

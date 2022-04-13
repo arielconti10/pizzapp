@@ -1,8 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import { Alert, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { FlatList } from 'react-native-gesture-handler';
 import { useTheme } from 'styled-components/native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
+
+import { Search } from '@components/Search';
+import { ProductCard, ProductProps } from '@components/ProductCard';
 
 import { 
   Container,
@@ -16,15 +21,13 @@ import {
   NewProductButton,
 } from './styles';
 
-import { Search } from '@components/Search';
-import { ProductCard, ProductProps } from '@components/ProductCard';
-import { FlatList } from 'react-native-gesture-handler';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useAuth } from '@hooks/auth';
 
 export function Home() {
   const { COLORS } = useTheme()
   const [search, setSearch] = useState<string>('');
   const [pizzas, setPizzas] = useState<ProductProps[]>([]);
+  const { signOut } = useAuth();
   const navigation = useNavigation();
 
   function fetchPizzas(value: string) {
@@ -66,6 +69,10 @@ export function Home() {
     navigation.navigate('product', {});
   }
 
+  function handleLogout() {
+    signOut();
+  }
+
   useFocusEffect(
     useCallback(() => {
       fetchPizzas('');
@@ -80,7 +87,7 @@ export function Home() {
           <GreetingText>Bem vindo, Ariel</GreetingText>
         </Greeting>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleLogout}>
           <MaterialIcons name="logout" size={24} color={COLORS.TITLE} />
         </TouchableOpacity>
       </Header>
